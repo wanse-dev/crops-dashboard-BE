@@ -65,8 +65,9 @@ const verCampañasPorPais = async (req: Request, res: Response) => {
   try {
     const { id_pais } = req.params;
     const { añoDesde, añoHasta, cultivo } = req.query;
-    const campañas = await sequelize.query(
-      "CALL spu_ver_campañas_por_pais(:id_pais)",
+
+    const campaña = await sequelize.query(
+      "CALL spu_ver_campañas_por_pais(:p_desde, :p_hasta, :id_pais, :id_cultivo)",
       {
         replacements: {
           p_desde: añoDesde,
@@ -78,7 +79,7 @@ const verCampañasPorPais = async (req: Request, res: Response) => {
     );
     res.status(200).json({
       message: "Campañas obtenidas exitosamente",
-      data: campañas,
+      data: campaña,
       error: false,
     });
   } catch (error) {
@@ -123,20 +124,20 @@ const verCampañasPorProvincia = async (req: Request, res: Response) => {
     const { id_provincia } = req.params;
     const { añoDesde, añoHasta, cultivo } = req.query;
 
-    const campañas = await sequelize.query(
-      "CALL spu_ver_campañas_por_provincia(:id_provincia)",
+    const campaña = await sequelize.query(
+      "CALL spu_ver_campañas_por_provincia(:p_desde, :p_hasta, :id_provincia, :id_cultivo)",
       {
         replacements: {
           p_desde: añoDesde,
           p_hasta: añoHasta,
-          id_region: id_provincia,
+          id_provincia: id_provincia,
           id_cultivo: cultivo,
         },
       }
     );
     res.status(200).json({
       message: "Campañas obtenidas exitosamente",
-      data: campañas,
+      data: campaña,
       error: false,
     });
   } catch (error) {
