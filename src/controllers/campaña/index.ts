@@ -148,10 +148,190 @@ const verCampañasPorProvincia = async (req: Request, res: Response) => {
   }
 };
 
+const haPerdidasPorPais = async (req: Request, res: Response) => {
+  try {
+    const { id_pais } = req.params;
+    const { añoDesde, añoHasta, cultivo } = req.query;
+
+    const campaña = await sequelize.query(
+      "CALL spu_ha_perdidas_por_pais(:p_desde, :p_hasta, :id_pais, :id_cultivo)",
+      {
+        replacements: {
+          p_desde: añoDesde,
+          p_hasta: añoHasta,
+          id_pais: id_pais,
+          id_cultivo: cultivo,
+        },
+      }
+    );
+    res.status(200).json({
+      message: "Campañas obtenidas exitosamente",
+      data: campaña,
+      error: false,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error al obtener las campañas por país",
+      error,
+    });
+  }
+};
+
+const haPerdidasPorRegion = async (req: Request, res: Response) => {
+  try {
+    const { id_region } = req.params;
+    const { añoDesde, añoHasta, cultivo } = req.query;
+
+    const campañas = await sequelize.query(
+      "CALL spu_ha_perdidas_por_region(:p_desde, :p_hasta, :id_region, :id_cultivo)",
+      {
+        replacements: {
+          p_desde: añoDesde,
+          p_hasta: añoHasta,
+          id_region: id_region,
+          id_cultivo: cultivo,
+        },
+      }
+    );
+    res.status(200).json({
+      message: "Campañas obtenidas exitosamente",
+      data: campañas,
+      error: false,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error al obtener las campañas por región",
+      error,
+    });
+  }
+};
+
+const haPerdidasPorProvincia = async (req: Request, res: Response) => {
+  try {
+    const { id_provincia } = req.params;
+    const { añoDesde, añoHasta, cultivo } = req.query;
+
+    const campaña = await sequelize.query(
+      "CALL spu_ha_perdidas_por_provincia(:p_desde, :p_hasta, :id_provincia, :id_cultivo)",
+      {
+        replacements: {
+          p_desde: añoDesde,
+          p_hasta: añoHasta,
+          id_provincia: id_provincia,
+          id_cultivo: cultivo,
+        },
+      }
+    );
+    res.status(200).json({
+      message: "Campañas obtenidas exitosamente",
+      data: campaña,
+      error: false,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error al obtener las campañas por provincia",
+      error,
+    });
+  }
+};
+
+const promHaPerdidasPorPais = async (req: Request, res: Response) => {
+  try {
+    const { id_pais } = req.params;
+    const { añoDesde, añoHasta, cultivo } = req.query;
+
+    const campaña = await sequelize.query(
+      "CALL spu_prom_ha_perdidas_por_pais(:p_desde, :p_hasta, :id_pais, :id_cultivo)",
+      {
+        replacements: {
+          p_desde: añoDesde,
+          p_hasta: añoHasta,
+          id_pais: id_pais,
+          id_cultivo: cultivo,
+        },
+      }
+    );
+    res.status(200).json({
+      message: "Campañas obtenidas exitosamente",
+      data: campaña,
+      error: false,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error al obtener el promedio de pérdidas por país",
+      error,
+    });
+  }
+};
+
+const promHaPerdidasPorRegion = async (req: Request, res: Response) => {
+  try {
+    const { id_region } = req.params;
+    const { añoDesde, añoHasta, cultivo } = req.query;
+
+    const campaña = await sequelize.query(
+      "CALL spu_prom_ha_perdidas_por_region(:p_desde, :p_hasta, :id_region, :id_cultivo)",
+      {
+        replacements: {
+          p_desde: añoDesde,
+          p_hasta: añoHasta,
+          id_region: id_region,
+          id_cultivo: cultivo,
+        },
+      }
+    );
+    res.status(200).json({
+      message: "Campañas obtenidas exitosamente",
+      data: campaña,
+      error: false,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error al obtener el promedio de pérdidas por región",
+      error,
+    });
+  }
+};
+
+const promHaPerdidasPorProvincia = async (req: Request, res: Response) => {
+  try {
+    const { id_provincia } = req.params;
+    const { añoDesde, añoHasta, cultivo } = req.query;
+
+    const campaña = await sequelize.query(
+      "CALL spu_prom_ha_perdidas_por_provincia(:p_desde, :p_hasta, :id_provincia, :id_cultivo)",
+      {
+        replacements: {
+          p_desde: añoDesde,
+          p_hasta: añoHasta,
+          id_provincia: id_provincia,
+          id_cultivo: cultivo,
+        },
+      }
+    );
+    res.status(200).json({
+      message: "Campañas obtenidas exitosamente",
+      data: campaña,
+      error: false,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error al obtener el promedio de pérdidas por provincia",
+      error,
+    });
+  }
+};
+
 export {
   campañaAlta,
   campañaBaja,
   verCampañasPorPais,
   verCampañasPorRegion,
   verCampañasPorProvincia,
+  haPerdidasPorPais,
+  haPerdidasPorRegion,
+  haPerdidasPorProvincia,
+  promHaPerdidasPorPais,
+  promHaPerdidasPorRegion,
+  promHaPerdidasPorProvincia,
 };
